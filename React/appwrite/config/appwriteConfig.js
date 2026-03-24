@@ -4,7 +4,7 @@ const client = new Client();
 
 client
   .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject("YOUR_PROJECT_ID");
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
 export const databases = new Databases(client);
 
