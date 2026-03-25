@@ -1,17 +1,4 @@
-import { 
-  LayoutDashboard, 
-  Building2, 
-  Users, 
-  HardHat, 
-  CalendarCheck, 
-  CreditCard, 
-  Package, 
-  FileText, 
-  BarChart3, 
-  Settings, 
-  LifeBuoy, 
-  Plus 
-} from 'lucide-react';
+import { LayoutDashboard, Building2, Users, HardHat, CalendarCheck, CreditCard, Package, FileText, BarChart3, Settings, LifeBuoy, Plus } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 export default function Sidebar() {
