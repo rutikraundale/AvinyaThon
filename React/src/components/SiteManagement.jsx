@@ -14,9 +14,6 @@ export default function SiteManagement() {
           <p className="text-orange-800 text-[10px] font-bold uppercase tracking-widest mb-1">Infrastructure Hub</p>
           <h2 className="text-4xl font-extrabold text-gray-800">Site Management</h2>
         </div>
-        <button className="bg-orange-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold shadow-lg shadow-orange-100">
-          <Plus size={20} /> New Project
-        </button>
       </div>
 
       {/* Stats Section */}

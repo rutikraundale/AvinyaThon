@@ -50,28 +50,6 @@ export default function Sidebar() {
         <button className="w-full bg-gradient-to-r from-orange-700 to-orange-800 text-white flex items-center justify-center gap-2 py-3 rounded-xl shadow-lg shadow-orange-100 mb-4 font-semibold hover:shadow-orange-200 transition-all">
           <Plus size={20} /> New Project
         </button>
-        
-        <NavLink 
-          to="/settings"
-          className={({ isActive }) => 
-            `w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-              isActive ? 'bg-orange-50 text-orange-700' : 'text-gray-500 hover:bg-gray-50'
-            }`
-          }
-        >
-          <Settings size={18} /> Settings
-        </NavLink>
-
-        <NavLink 
-          to="/support"
-          className={({ isActive }) => 
-            `w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-              isActive ? 'bg-orange-50 text-orange-700' : 'text-gray-500 hover:bg-gray-50'
-            }`
-          }
-        >
-          <LifeBuoy size={18} /> Support
-        </NavLink>
       </div>
     </div>
   );

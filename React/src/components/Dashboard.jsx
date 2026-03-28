@@ -1,4 +1,4 @@
-import { Search, Bell, HelpCircle, Building2, Users, Wallet, CreditCard } from 'lucide-react';
+import {  Building2, Users, Wallet, CreditCard } from 'lucide-react';
 import { UserButton, useUser } from "@clerk/clerk-react";
 import StatCard from './StatCard';
 
@@ -9,22 +9,12 @@ export default function Dashboard() {
       {/* Header */}
       <header className="flex justify-between items-center mb-10">
         <div className="flex items-center gap-4 flex-1 max-w-xl">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input 
-              type="text" 
-              placeholder="Search invoices, workers, or sites..." 
-              className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20"
-            />
-          </div>
           <button className="flex items-center gap-2 text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-xl border border-gray-200">
             Site Selector <span className="text-[10px]">▼</span>
           </button>
         </div>
 
         <div className="flex items-center gap-6">
-          <button className="relative text-gray-400"><Bell size={22} /><div className="absolute top-0 right-0 w-2 h-2 bg-orange-600 rounded-full border-2 border-white"></div></button>
-          <button className="text-gray-400"><HelpCircle size={22} /></button>
           <div className="flex items-center gap-3 border-l pl-6 border-gray-200">
             <div className="text-right">
               <p className="text-sm font-bold">{user?.firstName || 'User'}</p>
