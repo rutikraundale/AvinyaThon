@@ -82,7 +82,7 @@ export default function SiteManagement() {
             <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Active Projects</p>
             <h3 className="text-3xl font-black text-gray-800 mb-4">{sites.length}</h3>
             <div className="flex gap-2">
-              <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold">{sites.filter(s => s.status === 'ACTIVE').length} Active</span>
+              <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold">{sites.filter(s => (s.status || 'ACTIVE').toUpperCase() === 'ACTIVE').length} Active</span>
             </div>
           </div>
           <Compass size={120} className="text-gray-50 absolute -right-4 -bottom-4 rotate-12" />
@@ -125,9 +125,9 @@ export default function SiteManagement() {
                   <td className="px-6 py-6 text-sm text-gray-500 font-medium">{site.location || site.loc || 'Not specified'}</td>
                   <td className="px-6 py-6">
                     <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold ${
-                      (site.status || 'ACTIVE') === 'ACTIVE' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'
+                      (site.status || 'ACTIVE').toUpperCase() === 'ACTIVE' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'
                     }`}>
-                      {site.status || 'ACTIVE'}
+                      {(site.status || 'ACTIVE').toUpperCase()}
                     </span>
                   </td>
                   <td className="px-6 py-6 flex items-center gap-3">
