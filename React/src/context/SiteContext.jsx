@@ -22,17 +22,24 @@ export const SiteProvider = ({ children }) => {
       await pingAppwrite();
       const response = await getSites(userId, role, assignedSiteId);
       setSites(response.documents || []);
+      
+      // If there are sites but none selected, select the first one
       if (response.documents?.length > 0 && !selectedSite) {
         setSelectedSite(response.documents[0]);
       }
     } catch (error) {
-      console.error("Error fetching sites:", error);
+      console.error("SiteContext :: fetchSites :: error", error);
     }
   }, [loading, userId, role, assignedSiteId]);
 
   useEffect(() => {
-    fetchSites();
-  }, [fetchSites]);
+    if (userId) {
+      fetchSites();
+    } else {
+      setSites([]);
+      setSelectedSite(null);
+    }
+  }, [userId, fetchSites]);
 
   return (
     <SiteContext.Provider value={{ selectedSite, setSelectedSite, sites, setSites, fetchSites, role, userId }}>

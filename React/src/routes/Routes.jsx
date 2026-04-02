@@ -19,7 +19,9 @@ const ProtectedLayout = () => {
     <div className="flex bg-slate-50 min-h-screen">
       <Sidebar />
       <main className="flex-1">
-        <Outlet />
+        <div className="p-4 lg:p-8">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
