@@ -56,10 +56,10 @@ export const updateMaterialExpense = async (siteId, amount) => {
     const finance = await getFinanceBySite(siteId);
 
     const updated = {
-      materialCost: finance.materialCost + amount,
-      totalExpense: finance.totalExpense + amount,
+      materialCost: (finance.materialCost || 0) + amount,
+      expenses: (finance.expenses || 0) + amount,
       remainingBudget:
-        finance.totalBudget - (finance.totalExpense + amount),
+        (finance.budget || 0) - ((finance.expenses || 0) + amount),
     };
 
     return await updateFinance(finance.$id, updated);
@@ -74,10 +74,10 @@ export const updateLaborCost = async (siteId, amount) => {
     const finance = await getFinanceBySite(siteId);
 
     const updated = {
-      laborCost: finance.laborCost + amount,
-      totalExpense: finance.totalExpense + amount,
+      labourcost: (finance.labourcost || 0) + amount,
+      expenses: (finance.expenses || 0) + amount,
       remainingBudget:
-        finance.totalBudget - (finance.totalExpense + amount),
+        (finance.budget || 0) - ((finance.expenses || 0) + amount),
     };
 
     return await updateFinance(finance.$id, updated);
@@ -92,10 +92,10 @@ export const updateEngineerCost = async (siteId, amount) => {
     const finance = await getFinanceBySite(siteId);
 
     const updated = {
-      engineerCost: finance.engineerCost + amount,
-      totalExpense: finance.totalExpense + amount,
+      engineerCost: (finance.engineerCost || 0) + amount,
+      expenses: (finance.expenses || 0) + amount,
       remainingBudget:
-        finance.totalBudget - (finance.totalExpense + amount),
+        (finance.budget || 0) - ((finance.expenses || 0) + amount),
     };
 
     return await updateFinance(finance.$id, updated);
@@ -103,8 +103,41 @@ export const updateEngineerCost = async (siteId, amount) => {
     console.error("Engineer Cost Error:", error);
   }
 };
+
+// =======================================================
+// ➖ DEDUCTIONS (Subtract from costs)
+// =======================================================
+
+export const deductLaborCost = async (siteId, amount) => {
+  try {
+    const finance = await getFinanceBySite(siteId);
+    const updated = {
+      labourcost: Math.max(0, (finance.labourcost || 0) - amount),
+      expenses: Math.max(0, (finance.expenses || 0) - amount),
+      remainingBudget: (finance.budget || 0) - Math.max(0, (finance.expenses || 0) - amount)
+    };
+    return await updateFinance(finance.$id, updated);
+  } catch (error) {
+    console.error("Deduct Labor Cost Error:", error);
+  }
+};
+
+export const deductEngineerCost = async (siteId, amount) => {
+  try {
+    const finance = await getFinanceBySite(siteId);
+    const updated = {
+      engineercost: Math.max(0, (finance.engineercost || 0) - amount),
+      expenses: Math.max(0, (finance.expenses || 0) - amount),
+      remainingBudget: (finance.budget || 0) - Math.max(0, (finance.expenses || 0) - amount)
+    };
+    return await updateFinance(finance.$id, updated);
+  } catch (error) {
+    console.error("Deduct Engineer Cost Error:", error);
+  }
+};
+
 export const checkBudgetAlert = (finance) => {
-  const threshold = finance.totalBudget * 0.2;
+  const threshold = (finance.budget || 0) * 0.2;
 
   if (finance.remainingBudget < threshold) {
     return "⚠️ Low Budget Warning";
