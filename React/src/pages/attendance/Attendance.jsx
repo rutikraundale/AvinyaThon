@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { CalendarCheck, Users, HardHat, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { useSite } from "../../context/SiteContext";
 import { useAuth } from "../../context/AuthContext";
-import { getWorkersBySite } from "../../../appwrite/services/worker.service.js";
-import { getEngineersBySite } from "../../../appwrite/services/engineer.service.js";
+import { getWorkersBySite, updateWorker } from "../../../appwrite/services/worker.service.js";
+import { getEngineersBySite, updateEngineer } from "../../../appwrite/services/engineer.service.js";
 import { addAttendance, updateAttendance, getAttendanceBySiteAndDate } from "../../../appwrite/services/attendance.service.js";
 
 const Attendance = () => {
@@ -89,10 +89,11 @@ const Attendance = () => {
 
     setSubmitting(true);
     try {
-      // Batch create all records
-      const promises = personnel.map(person => {
+      // Batch create all records and update present days
+      const promises = personnel.map(async (person) => {
         const markedStatus = localStatuses[person.$id] || "absent";
-        return addAttendance({
+        
+        const attendancePromise = addAttendance({
           type: person._type,
           status: markedStatus,
           manager: user?.name || "Admin",
@@ -100,6 +101,16 @@ const Attendance = () => {
           siteId: selectedSite.$id,
           personId: person.$id
         });
+
+        if (markedStatus === "present") {
+          const newPresentDays = String(parseInt(person.presentDays || "0", 10) + 1);
+          if (person._type === "labour") {
+            await updateWorker(person.$id, { presentDays: newPresentDays });
+          } else if (person._type === "engineer") {
+            await updateEngineer(person.$id, { presentDays: newPresentDays });
+          }
+        }
+        return attendancePromise;
       });
 
       await Promise.all(promises);

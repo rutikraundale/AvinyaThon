@@ -19,3 +19,13 @@ export const getWorkersBySite = async (siteId) => {
     [Query.equal("siteId", siteId)]
   );
 };
+
+// Update Worker
+export const updateWorker = async (documentId, data) => {
+  return databases.updateDocument(
+    DATABASE_ID,
+    COLLECTIONS.WORKERS,
+    documentId,
+    data
+  );
+};

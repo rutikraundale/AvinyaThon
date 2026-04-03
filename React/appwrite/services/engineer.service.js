@@ -19,3 +19,13 @@ export const getEngineersBySite = async (siteId) => {
     siteId ? [Query.equal("siteId", siteId)] : []
   );
 };
+
+// Update Engineer
+export const updateEngineer = async (documentId, data) => {
+  return databases.updateDocument(
+    DATABASE_ID,
+    COLLECTIONS.ENGINEERS,
+    documentId,
+    data
+  );
+};
