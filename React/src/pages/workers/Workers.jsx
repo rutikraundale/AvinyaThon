@@ -59,6 +59,7 @@ const Workers = () => {
         dailyWage: Number(formData.dailyWage),
         siteId: selectedSite.$id,
         manager: user?.name || "Admin",
+        presentDays: "0",
       };
 
       await addWorker(newWorker);
@@ -112,6 +113,7 @@ const Workers = () => {
                 <tr>
                   <th className="px-4 py-4">Name & ID</th>
                   <th className="px-4 py-4">Role</th>
+                  <th className="px-4 py-4">Present Days</th>
                   <th className="px-4 py-4">Daily Wage</th>
                   <th className="px-4 py-4">Manager</th>
                   <th className="px-4 py-4 text-right">Actions</th>
@@ -135,6 +137,7 @@ const Workers = () => {
                         </div>
                       </td>
                       <td className="px-4 py-5 text-sm font-bold text-gray-700 uppercase tracking-tighter">{person.role}</td>
+                      <td className="px-4 py-5 text-sm font-bold text-orange-700">{person.presentDays || '0'}</td>
                       <td className="px-4 py-5 text-sm text-green-600 font-bold">₹{person.dailyWage}</td>
                       <td className="px-4 py-5 text-sm font-bold text-gray-600">{person.manager || 'Unassigned'}</td>
                       <td className="px-4 py-5 text-right space-x-3">
